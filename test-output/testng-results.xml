@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="1" ignored="0" total="1" passed="0">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Default suite" duration-ms="121219" started-at="2017-07-05T23:24:13Z" finished-at="2017-07-05T23:26:14Z">
+    <groups>
+    </groups>
+    <test name="Default test" duration-ms="121219" started-at="2017-07-05T23:24:13Z" finished-at="2017-07-05T23:26:14Z">
+      <class name="com.accenture.automatization.TestPinterest">
+        <test-method status="PASS" signature="setUpAppium()[pri:0, instance:com.accenture.automatization.TestPinterest@148080bb]" name="setUpAppium" is-config="true" duration-ms="14390" started-at="2017-07-05T18:24:13Z" finished-at="2017-07-05T18:24:27Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUpAppium -->
+        <test-method status="FAIL" signature="testLogin()[pri:0, instance:com.accenture.automatization.TestPinterest@148080bb]" name="testLogin" duration-ms="103277" started-at="2017-07-05T18:24:27Z" finished-at="2017-07-05T18:26:11Z">
+          <exception class="org.openqa.selenium.NoSuchElementException">
+            <message>
+              <![CDATA[An element could not be located on the page using the given search parameters. (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 3.34 seconds
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: 'unknown', revision: '1969d75', time: '2016-10-18 09:43:45 -0700'
+System info: host: 'MININT-MFN3GSQ', ip: '192.168.3.86', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_131'
+Driver info: io.appium.java_client.android.AndroidDriver
+Capabilities [{appPackage=com.pinterest, deviceScreenSize=720x1280, networkConnectionEnabled=true, warnings={}, databaseEnabled=false, deviceName=TA06808SD5, platform=LINUX, deviceUDID=TA06808SD5, appActivity=com.pinterest.activity.PinterestActivity, desired={appPackage=com.pinterest, appActivity=com.pinterest.activity.PinterestActivity, platformVersion=6.0, udid=TA06808SD5, platformName=Android, deviceName=Name}, platformVersion=5.1, webStorageEnabled=false, locationContextEnabled=false, takesScreenshot=true, javascriptEnabled=true, deviceModel=XT1032, udid=TA06808SD5, platformName=Android, deviceManufacturer=motorola}]
+Session ID: ec059c7f-01bb-4be4-975a-517bd8b257cb
+*** Element info: {Using=xpath, value=//android.widget.TextView[@id='com.pinterest:id/setting_text_tv' and @text='Log out']}]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[org.openqa.selenium.NoSuchElementException: An element could not be located on the page using the given search parameters. (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 3.34 seconds
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: 'unknown', revision: '1969d75', time: '2016-10-18 09:43:45 -0700'
+System info: host: 'MININT-MFN3GSQ', ip: '192.168.3.86', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_131'
+Driver info: io.appium.java_client.android.AndroidDriver
+Capabilities [{appPackage=com.pinterest, deviceScreenSize=720x1280, networkConnectionEnabled=true, warnings={}, databaseEnabled=false, deviceName=TA06808SD5, platform=LINUX, deviceUDID=TA06808SD5, appActivity=com.pinterest.activity.PinterestActivity, desired={appPackage=com.pinterest, appActivity=com.pinterest.activity.PinterestActivity, platformVersion=6.0, udid=TA06808SD5, platformName=Android, deviceName=Name}, platformVersion=5.1, webStorageEnabled=false, locationContextEnabled=false, takesScreenshot=true, javascriptEnabled=true, deviceModel=XT1032, udid=TA06808SD5, platformName=Android, deviceManufacturer=motorola}]
+Session ID: ec059c7f-01bb-4be4-975a-517bd8b257cb
+*** Element info: {Using=xpath, value=//android.widget.TextView[@id='com.pinterest:id/setting_text_tv' and @text='Log out']}
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
+	at java.lang.reflect.Constructor.newInstance(Unknown Source)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:216)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:168)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:635)
+	at io.appium.java_client.DefaultGenericMobileDriver.execute(DefaultGenericMobileDriver.java:40)
+	at io.appium.java_client.AppiumDriver.execute(AppiumDriver.java:1)
+	at io.appium.java_client.android.AndroidDriver.execute(AndroidDriver.java:1)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:368)
+	at io.appium.java_client.DefaultGenericMobileDriver.findElement(DefaultGenericMobileDriver.java:56)
+	at io.appium.java_client.AppiumDriver.findElement(AppiumDriver.java:1)
+	at io.appium.java_client.android.AndroidDriver.findElement(AndroidDriver.java:1)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:473)
+	at io.appium.java_client.DefaultGenericMobileDriver.findElementByXPath(DefaultGenericMobileDriver.java:134)
+	at io.appium.java_client.AppiumDriver.findElementByXPath(AppiumDriver.java:1)
+	at io.appium.java_client.android.AndroidDriver.findElementByXPath(AndroidDriver.java:1)
+	at com.accenture.automatization.TestPinterest.testLogin(TestPinterest.java:165)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:104)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:645)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:851)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1177)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:129)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:112)
+	at org.testng.TestRunner.privateRun(TestRunner.java:756)
+	at org.testng.TestRunner.run(TestRunner.java:610)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:387)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:382)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:340)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:289)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1293)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1218)
+	at org.testng.TestNG.runSuites(TestNG.java:1133)
+	at org.testng.TestNG.run(TestNG.java:1104)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:230)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:76)
+]]>
+            </full-stacktrace>
+          </exception> <!-- org.openqa.selenium.NoSuchElementException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testLogin -->
+        <test-method status="PASS" signature="CleanUpAppium()[pri:0, instance:com.accenture.automatization.TestPinterest@148080bb]" name="CleanUpAppium" is-config="true" duration-ms="3462" started-at="2017-07-05T18:26:11Z" finished-at="2017-07-05T18:26:14Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- CleanUpAppium -->
+      </class> <!-- com.accenture.automatization.TestPinterest -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>

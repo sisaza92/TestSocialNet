@@ -5,6 +5,7 @@ import static org.testng.Assert.assertNotNull;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
@@ -26,9 +27,9 @@ import io.appium.java_client.android.AndroidKeyCode;
 
 public class TestPinterest {
 
-	private static final String SUCCESS_MESSAGE = "Success";
-	private static final String FAIL_MESSAGE = "Fail";
-	
+	private static final String SUCCESS_MESSAGE = "\tLogin Successful";
+	private static final String FAIL_MESSAGE = "\tLogin Fail";
+
 	public final String APPIUM_URL_SERVICE = "http://127.0.0.1:4723/wd/hub";
 
 	public final String NAME_PACKAGE = "com.pinterest";
@@ -48,24 +49,23 @@ public class TestPinterest {
 	public final String CAPABILITY_APP_ACTIVITY = "appActivity";
 
 	public final String FILE_PATH = "C://Users//Administrator//workspace//TestSocialNet//credentialsFile.xlsx";
-	
+
 	public static AppiumDriver<WebElement> driver;
 	DesiredCapabilities capabilities;
 	DataDrivenUser dataDrivenUser = null;
 
-	private WebElement findElement(By by){
+	private WebElement findElement(By by) {
 		WebElement element = null;
 		try {
-			 element = driver.findElement(by);
+			element = driver.findElement(by);
 		} catch (NoSuchElementException e) {
 			// TODO: handle exception
-			//System.err.println("element not found");
+			// System.err.println("element not found");
 		}
-		
-		
+
 		return element;
 	}
-	
+
 	@BeforeMethod
 	public void setUpAppium() throws MalformedURLException, InterruptedException {
 
@@ -75,7 +75,7 @@ public class TestPinterest {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}	
+		}
 		String activityname = NAME_PACKAGE + "." + NAME_ACTIVITY;
 
 		capabilities.setCapability(CAPABILITY_DEVICE_NAME, DEVICE_NAME);
@@ -99,132 +99,165 @@ public class TestPinterest {
 	@Test
 	public void testLogin() throws InterruptedException {
 
-		int rowNum = 1;
-		Credential credential;		
+		int rowNum = 0;
+		Credential credential;
 		credential = dataDrivenUser.getCredential(rowNum);
-		
+
 		int startSwipeX = 380;
 		int startSwipeY = 1050;
 		int endSwipeX = 250;
 		int endSwipeY = 450;
 		int swipeDuration = 3000;
 
-		
 		assertNotNull(credential, "There are not credentials on the file");
-		while (!credential.getUsername().isEmpty() && !credential.getPassword().isEmpty()) {
+		while (null != credential) {
 
 			WebElement txtSearchBar = null;
 			WebElement email = null;
-			
+
 			try {
-					
+
 				Assert.assertNotNull(driver.getContext());
 
-				System.out.println("Using "+credential.getUsername()+" credentials");
-				
+				System.out.println("\nUsing " + credential.getUsername() + " credentials");
+
 				email = driver.findElementById("com.pinterest:id/email_address");
+				System.out.println("\tClicking email address field");
 				email.click();
-				
 
 				WebElement dimmissSuggestion = findElement(By.id("com.google.android.gms:id/cancel"));
 				if (null != dimmissSuggestion) {
 					dimmissSuggestion.click();
+					System.out.println("\tDimmising the suggestion popup");
 				}
+				System.out.println("\tClicking email address field");
 				email.click();
+				System.out.println("\tCleaning email address field");
 				email.clear();
+				System.out.println("\tSending string to email address field");
 				email.sendKeys(credential.getUsername());
 
 				WebElement btnContinue = driver.findElement(By.id("com.pinterest:id/continue_email_bt"));
+				System.out.println("\tClicking continue button address field");
 				btnContinue.click();
 
 				WebElement chkShowPassword = findElement(By.id("com.pinterest:id/password_toggle_cb"));
 				if (null == chkShowPassword) {
-					String message = FAIL_MESSAGE+": This account dont exist";
-					System.err.println(message);
-					dataDrivenUser.setStatus(rowNum, message);
-					AndroidDeviceActionShortcuts shortcuts =(AndroidDeviceActionShortcuts) driver;
-					shortcuts.pressKeyCode(AndroidKeyCode.BACK);
-					shortcuts.pressKeyCode(AndroidKeyCode.BACK);
-				}else{
+					WebElement singUpMessage = findElement(By.id("com.pinterest:id/signup_name"));
+					if (singUpMessage == null) {
+						singUpMessage = driver.findElementByXPath("//android.widget.TextView[@bounds='[95,584][622,667]']");
+						String message = FAIL_MESSAGE + ": " + singUpMessage.getText();
+						System.err.println(message);
+						dataDrivenUser.setStatus(rowNum, message);
+					} else {
+						String message = FAIL_MESSAGE + ": " + singUpMessage.getText();
+						System.err.println(message);
+						dataDrivenUser.setStatus(rowNum, message);
+						AndroidDeviceActionShortcuts shortcuts = (AndroidDeviceActionShortcuts) driver;
+						System.out.println("\tPressing back button");
+						shortcuts.pressKeyCode(AndroidKeyCode.BACK);
+						shortcuts.pressKeyCode(AndroidKeyCode.BACK);
+					}
+
+				} else {
 
 					WebElement password = driver.findElement(By.id("com.pinterest:id/password"));
+					System.out.println("\tClicking password field");
 					password.click();
+					System.out.println("\tSending string to password field");
 					password.sendKeys(credential.getPassword());
-	
+
 					WebElement btnLogin = driver.findElement(By.id("com.pinterest:id/next_bt"));
+					System.out.println("\tClicking Login button field");
 					btnLogin.click();
+
+					txtSearchBar = findElement(By.id("com.pinterest:id/search_tv"));
+					WebElement messageFail = findElement(
+							By.xpath("//android.widget.TextView[@bounds='[90,575][630,669]']"));
+
+					if (messageFail != null) {
+
+						String message = FAIL_MESSAGE + ": " + messageFail.getText();
+						System.err.println(message);
+						dataDrivenUser.setStatus(rowNum, message);
+						AndroidDeviceActionShortcuts shortcuts = (AndroidDeviceActionShortcuts) driver;
+						System.out.println("\tPressing back button");
+						shortcuts.pressKeyCode(AndroidKeyCode.BACK);
+						shortcuts.pressKeyCode(AndroidKeyCode.BACK);
+
+					} else {
+
+						System.out.println("\tClicking Search bar");
+						txtSearchBar.click();
+
+						WebElement queyInput = driver.findElement(By.id("com.pinterest:id/query_input"));
+						System.out.println("\tSending query to Search bar");
+						queyInput.sendKeys("Pastor Australiano");
+						driver.tap(1, 660, 1125, 100);
+
+						Thread.sleep(2000);
+						System.out.println("\tCSwiping down the screen");
+						driver.swipe(startSwipeX, startSwipeY, endSwipeX, endSwipeY, swipeDuration);
+
+						WebElement photos = driver.findElementById("com.pinterest:id/adapter_vw");
+
+						WebElement photo = photos.findElement(By.xpath("//android.view.View[@index='6']"));
+						System.out.println("\tClicking photo");
+						photo.click();
+
+						WebElement options = driver.findElement(By.id("com.pinterest:id/menu_pin_overflow"));
+						System.out.println("\tClicking options menu");
+						options.click();
+
+						WebElement btnDownload = driver.findElement(By.id("com.pinterest:id/value_tv"));
+						System.out.println("\tClicking Download button");
+						btnDownload.click();
+
+						WebElement userProfile = driver.findElement(By.id("com.pinterest:id/profile_icon"));
+						System.out.println("\tClicking profile icon");
+						userProfile.click();
+
+						WebElement menu_create = driver.findElement(By.id("com.pinterest:id/menu_create"));
+						System.out.println("\tClicking Menu Create");
+						menu_create.click();
+
+						WebElement create_board = driver.findElement(By.id("com.pinterest:id/create_board"));
+						System.out.println("\tClicking create board icon");
+						create_board.click();
+
+						WebElement board_name = driver.findElement(By.id("com.pinterest:id/board_name_edittext"));
+						System.out.println("\tClicking board name field");
+						board_name.click();
+						System.out.println("\tSending String to board name");
+						board_name.sendKeys(String.valueOf(new Date().getTime()));
+						driver.hideKeyboard();
+
+						WebElement btnCreate = driver.findElement(By.id("com.pinterest:id/create_btn"));
+						System.out.println("\tClicking create button");
+						btnCreate.click();
+
+						WebElement btnSettings = driver.findElement(By.id("com.pinterest:id/menu_settings"));
+						System.out.println("\tClicking settings icon");
+						btnSettings.click();
+
+						WebElement btnLogOut = driver
+								.findElementByXPath("//android.widget.TextView[@bounds='[0,657][655,740]']");
+						System.out.println("\tClicking Logout button");
+						System.out.println("\tLoggin Out the Account");
+						btnLogOut.click();
+
+						System.err.println(SUCCESS_MESSAGE);
+						dataDrivenUser.setStatus(rowNum, SUCCESS_MESSAGE);
+					}
 				}
-				
-				txtSearchBar = findElement(By.id("com.pinterest:id/search_tv"));
-				WebElement messageFail = findElement(By.xpath("//android.widget.TextView[@bounds='[90,575][630,669]']"));
-				
-				if (messageFail != null) {
-					
-					String message = FAIL_MESSAGE+": "+messageFail.getText();
-					System.err.println(message);
-					dataDrivenUser.setStatus(rowNum, message);
-					AndroidDeviceActionShortcuts shortcuts =(AndroidDeviceActionShortcuts) driver;
-					shortcuts.pressKeyCode(AndroidKeyCode.BACK);
-					shortcuts.pressKeyCode(AndroidKeyCode.BACK);
-							
-				}else{
-					
-					txtSearchBar.click();
 
-					WebElement queyInput = driver.findElement(By.id("com.pinterest:id/query_input"));
-					queyInput.sendKeys("pastor australiano");
-					driver.tap(1, 660, 1125, 100);
-
-					Thread.sleep(2000);
-					driver.swipe(startSwipeX, startSwipeY, endSwipeX, endSwipeY, swipeDuration);
-
-					WebElement photos = driver.findElementById("com.pinterest:id/adapter_vw");
-					System.out.println(photos.toString());
-
-					WebElement photo = photos.findElement(By.xpath("//android.view.View[@index='6']"));
-					photo.click();
-
-					WebElement options = driver.findElement(By.id("com.pinterest:id/menu_pin_overflow"));
-					options.click();
-
-					WebElement btnDownload = driver.findElement(By.id("com.pinterest:id/value_tv"));
-					btnDownload.click();
-
-					WebElement userProfile = driver.findElement(By.id("com.pinterest:id/profile_icon"));
-					userProfile.click();
-
-					WebElement menu_create = driver.findElement(By.id("com.pinterest:id/menu_create"));
-					menu_create.click();
-
-					WebElement create_board = driver.findElement(By.id("com.pinterest:id/create_board"));
-					create_board.click();
-
-					WebElement board_name = driver.findElement(By.id("com.pinterest:id/board_name_edittext"));
-					board_name.click();
-					board_name.sendKeys("New Board");
-					driver.hideKeyboard();
-
-					WebElement btnCreate = driver.findElement(By.id("com.pinterest:id/create_btn"));
-					btnCreate.click();
-					
-					WebElement btnSettings = driver.findElement(By.id("com.pinterest:id/menu_settings"));
-					btnSettings.click();
-
-					WebElement btnLogOut = driver.findElementByXPath(
-							"//android.widget.TextView[@bounds='[0,657][655,740]']");
-					btnLogOut.click();
-					
-					System.err.println(SUCCESS_MESSAGE);
-					dataDrivenUser.setStatus(rowNum, SUCCESS_MESSAGE);
-				}
-				
-				
-			}catch (NoSuchElementException e) {
+			} catch (NoSuchElementException e) {
 				e.printStackTrace();
 			}
-			
+
 			rowNum++;
 			credential = dataDrivenUser.getCredential(rowNum);
+
 			if (null == credential) {
 				break;
 			}
